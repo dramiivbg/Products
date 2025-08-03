@@ -1,0 +1,12 @@
+<div class="product-list">
+  @for (product of products(); track $index) {
+    <div class="product-card">
+      <div class="card-header">
+        <h2 (click)="EditProduct(product)" >{{ product.name }}</h2>
+        <button class="delete-btn" (click)="DeleteProduct(product, $index)">🗑️</button>
+      </div>
+      <p><strong>Precio:</strong> ${{ product.price }}</p>
+      <p><strong>Stock:</strong> {{ product.stock }}</p>
+    </div>
+  }
+</div>
