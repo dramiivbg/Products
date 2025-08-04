@@ -29,8 +29,8 @@ export class ListProducts implements OnInit{
 
   DeleteProduct(product:Product, index:number){
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: '¡Esta acción no se puede deshacer!',
+      title: '¿Are you sure?',
+      text: '¡This action cannot be undone!',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#d33',
