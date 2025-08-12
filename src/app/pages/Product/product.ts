@@ -5,6 +5,7 @@ import { ProductService } from '../../shared/services/productService';
 import { Product} from '../../shared/models/product';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product',
@@ -22,12 +23,18 @@ export class ProductPage {
   filteredProducts: Product[] = [];
   
    ngOnInit(): void {
-    this.subscription = this.productService.Products().subscribe(
-       (products) => {
-        this.products = products;
-        this.filteredProducts = products;
-       } 
-     )
+     this.subscription = this.productService.Products().subscribe(
+       {
+         next: (products) => {
+           this.products = products;
+           this.filteredProducts = products;
+           console.log(this.products);
+         }
+
+         , error: (err) => {
+           Swal.fire('ooh!', err.message, 'error');
+         }
+       });
    }
 
    ngOnDestroy(){
