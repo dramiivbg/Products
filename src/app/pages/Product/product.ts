@@ -6,6 +6,7 @@ import { Product} from '../../shared/models/product';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { AuthService } from '../../shared/services/auth-service';
 
 @Component({
   selector: 'app-product',
@@ -18,11 +19,13 @@ export class ProductPage {
   public products:  Product[];
   private subscription = new Subscription();
   private productService = inject(ProductService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   public searchTerm = '';
   filteredProducts: Product[] = [];
   
    ngOnInit(): void {
+    this.authService.login('Ivan', '123456789').subscribe();
      this.subscription = this.productService.Products().subscribe(
        {
          next: (products) => {

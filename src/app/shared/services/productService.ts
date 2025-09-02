@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Product } from '../models/product';
 import { catchError, map, Observable, pipe, shareReplay, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
+import { AuthService } from './auth-service';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
