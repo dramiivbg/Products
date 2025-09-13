@@ -6,6 +6,7 @@ import { Product } from '../../shared/models/product';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../shared/services/auth-service';
 
 @Component({
   selector: 'app-update-product',
@@ -18,8 +19,8 @@ export class UpdateProduct implements OnInit{
   private productService = inject(ProductService);
   private router = inject(Router);
   private fb =  inject(FormBuilder);
+  private authService = inject(AuthService);
   productForm: FormGroup;
-  private subscription = new Subscription();
 
   ngOnInit(): void {
     const product:Product = history.state.product;
@@ -32,24 +33,15 @@ export class UpdateProduct implements OnInit{
     });
   }
 
-  
-  ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
-
-  onSubmit(): void {
+  async onSubmit(){
     if (this.productForm.valid) {
-      this.subscription = this.productService.UpdateProduct(this.productForm.value).subscribe(
-        {
-          next: () => {
-            this.router.navigate(['/products'], { replaceUrl: true });
-            Swal.fire('Ready!', 'Product successfully update.', 'success');
-          }
-
-          , error: (err) => {
-            Swal.fire('ooh!', err.message, 'error');
-          }
-        });
+      await this.authService.check_auth();
+      this.productService.UpdateProduct(this.productForm.value).then(() => {
+        this.router.navigate(['/products'], { replaceUrl: true });
+        Swal.fire('Ready!', 'Product successfully update.', 'success');
+      }).catch((err) => {
+        Swal.fire('ooh!', err.message, 'error');
+      });
     } else {
       console.log('Formulario inválido');
       this.productForm.markAllAsTouched(); // Marca errores

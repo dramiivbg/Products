@@ -5,6 +5,7 @@ import { ProductService } from '../../shared/services/productService';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../../shared/services/auth-service';
 
 @Component({
   selector: 'app-create-product',
@@ -15,8 +16,8 @@ import { Subscription } from 'rxjs';
 export class CreateProduct {
   private productService = inject(ProductService);
   private router = inject(Router);
+  private authService = inject(AuthService);
   productForm: FormGroup;
-  private subscription = new Subscription();
   constructor(private fb: FormBuilder) {
     this.productForm = this.fb.group({
       id: [0, [Validators.required, Validators.min(1)]],
@@ -26,21 +27,15 @@ export class CreateProduct {
     });
   }
 
-  ngOnDestroy(){
-    this.subscription.unsubscribe();
-  }
 
-  onSubmit(){
+  async onSubmit(){
     if (this.productForm.valid) {
-      this.subscription = this.productService.CreateProduct(this.productForm.value).subscribe({
-        next: (res) => {
-          console.log(res);
-          this.router.navigate(['/products'], { replaceUrl: true });
-          Swal.fire('Ready!', 'Product successfully created.', 'success');
-        },
-        error: (err) => {
-          Swal.fire('ooh!', err.message, 'error');
-        }
+      await this.authService.check_auth();
+      this.productService.CreateProduct(this.productForm.value).then(() => {
+        this.router.navigate(['/products'], { replaceUrl: true });
+        Swal.fire('Ready!', 'Product successfully created.', 'success');
+      }).catch((err) => {
+        Swal.fire('ooh!', err.message, 'error');
       });
     } else {
       console.log('Formulario inválido');

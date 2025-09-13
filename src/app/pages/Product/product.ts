@@ -17,31 +17,16 @@ import { AuthService } from '../../shared/services/auth-service';
 })
 export class ProductPage {
   public products:  Product[];
-  private subscription = new Subscription();
   private productService = inject(ProductService);
   private authService = inject(AuthService);
   private router = inject(Router);
   public searchTerm = '';
   filteredProducts: Product[] = [];
   
-   ngOnInit(): void {
-    this.authService.login('Ivan', '123456789').subscribe();
-     this.subscription = this.productService.Products().subscribe(
-       {
-         next: (products) => {
-           this.products = products;
-           this.filteredProducts = products;
-           console.log(this.products);
-         }
-
-         , error: (err) => {
-           Swal.fire('ooh!', err.message, 'error');
-         }
-       });
-   }
-
-   ngOnDestroy(){
-    this.subscription.unsubscribe();
+  async ngOnInit(){
+    debugger
+    await this.authService.check_auth();
+    this.getProducts();
    }
 
    onSearch(): void {
@@ -50,6 +35,15 @@ export class ProductPage {
     this.filteredProducts = this.products.filter(p =>
       p.name.toLowerCase().includes(term)
     );
+  }
+
+  getProducts(): void {
+    this.productService.Products().then(products => {
+      this.products = products;
+      this.filteredProducts = products; 
+    }).catch(err => {
+      Swal.fire('ooh!', err.message, 'error');
+    });
   }
 
   onNewProduct(): void {

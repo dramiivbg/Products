@@ -17,6 +17,7 @@ export class TokenService {
     if (!this.isBrowser) return;
     if (value) localStorage.setItem('token', value);
     else localStorage.removeItem('token');
+    console.log(value, localStorage.getItem('token'));
   }
 
   clear(): void {
