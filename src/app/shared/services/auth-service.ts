@@ -13,11 +13,8 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private tokenSvc = inject(TokenService);
 
-  async check_auth(): Promise<void> {
-    firstValueFrom(this.http.get(`${environment.apiAuth}/check-auth`)).catch((error) => {
-      console.error('error check-auth =>', error);
-      this.login("Ivan", "123456789");
-    });
+  async check_auth(){
+    return firstValueFrom(this.http.get(`${environment.apiAuth}/check-auth`));
   }
 
 

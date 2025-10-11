@@ -35,7 +35,6 @@ export class UpdateProduct implements OnInit{
 
   async onSubmit(){
     if (this.productForm.valid) {
-      await this.authService.check_auth();
       this.productService.UpdateProduct(this.productForm.value).then(() => {
         this.router.navigate(['/products'], { replaceUrl: true });
         Swal.fire('Ready!', 'Product successfully update.', 'success');

@@ -1,0 +1,13 @@
+<div class="toolbar">
+  <input
+    type="text"
+    placeholder="Search by product name"
+    [(ngModel)]="searchTerm"
+    (keyup.enter)="onSearch()"
+  />
+  <button (click)="onSearch()">Search</button>
+</div>
+
+<app-list-products-user [products]="filteredProducts"/>
+
+<router-outlet />

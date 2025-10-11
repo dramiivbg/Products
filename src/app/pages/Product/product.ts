@@ -24,8 +24,6 @@ export class ProductPage {
   filteredProducts: Product[] = [];
   
   async ngOnInit(){
-    debugger
-    await this.authService.check_auth();
     this.getProducts();
    }
 

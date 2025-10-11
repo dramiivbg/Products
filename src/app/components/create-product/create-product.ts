@@ -30,7 +30,6 @@ export class CreateProduct {
 
   async onSubmit(){
     if (this.productForm.valid) {
-      await this.authService.check_auth();
       this.productService.CreateProduct(this.productForm.value).then(() => {
         this.router.navigate(['/products'], { replaceUrl: true });
         Swal.fire('Ready!', 'Product successfully created.', 'success');
