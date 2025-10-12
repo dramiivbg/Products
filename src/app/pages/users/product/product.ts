@@ -6,10 +6,12 @@ import { AuthService } from '../../../shared/services/auth-service';
 import { Product } from '../../../shared/models/product';
 import Swal from 'sweetalert2';
 import { ListProductsUser } from '../../../components/list-products-user/list-products-user';
+import { RegisterPage } from "../../register/register";
+import { HeaderComponent } from "../../../components/header/header";
 
 @Component({
   selector: 'app-product',
-  imports: [ListProductsUser, FormsModule, RouterModule],
+  imports: [ListProductsUser, FormsModule, RouterModule, HeaderComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './product.html',
   styleUrl: './product.scss'

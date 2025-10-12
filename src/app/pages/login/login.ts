@@ -6,12 +6,13 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { JwtPayload } from '../../shared/models/jwt-payload';
 import { TokenService } from '../../shared/services/token-service';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.scss'
 })

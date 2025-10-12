@@ -1,0 +1,17 @@
+<header class="app-header">
+  <div class="logo">Ecommerce</div>
+
+  @if (isLoggedIn) {
+    <nav class="user-actions">
+        <div class="user-profile">
+            <span>Hola, {{ userProfile?.name }}</span>
+            <i class="material-icons">account_circle</i>
+        </div>
+    
+        <button (click)="onLogout()" class="logout-button">
+            Cerrar Sesión
+        </button>
+    </nav>
+  }
+
+</header>

@@ -5,6 +5,7 @@ import { UpdateProduct } from './components/update-product/update-product';
 import { authGuard } from './guards/auth-guard';
 import { LoginPage } from './pages/login/login';
 import { ProductUserPage } from './pages/users/product/product';
+import { RegisterPage } from './pages/register/register';
 
 export const routes: Routes = [
     {
@@ -28,6 +29,10 @@ export const routes: Routes = [
         path: 'login',
         component: LoginPage,
     },
+     {
+        path: 'register',
+        component: RegisterPage,
+     },
     {
         path: 'products/create',
         component: CreateProduct,
